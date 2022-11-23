@@ -1,0 +1,21 @@
+.img-preview-div {
+	width: 104px;
+	height: 104px;
+}
+
+.delete-icon {
+	display: none !important;
+	opacity: 90%;
+	font-size: 13px;
+}
+
+.img-preview-div:hover .delete-icon {
+	display: inline !important;
+	position: relative;
+	left: 78px;
+	bottom: 108px;
+}
+
+.img-preview-div:hover img {
+	opacity: 50%;
+}

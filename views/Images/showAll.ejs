@@ -1,0 +1,18 @@
+<% layout('layout/boilerplate') %>
+    <div class="container-fluid">
+        <div class="row mx-5">
+            <% for (let post of posts) {%> 
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3">
+                    <a class="text-decoration-none" href="/images/<%=post._id%>">
+                    <div class="card mx-auto">
+                        <img src="<%= post.imgs[0].url %>"
+                            class="card-img-top" alt="...">
+                        <div class="card-body p-2">
+                            <h6 class="card-subtitle mb-1 text-muted"><%= post.description %></h6>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            <% } %> 
+        </div>
+    </div>

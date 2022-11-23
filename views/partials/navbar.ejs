@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ImageApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/images">All</a>
+         <% if(currentUser) {%> 
+            <a class="nav-link" href="/images/new">New Post</a>
+            <a class="nav-link" href="/user/<%= currentUser._id %> ">Profile</a>
+        <% } %> 
+      </div>
+      <div class="navbar-nav ms-auto">
+        <% if(!currentUser) {%> 
+        <a class="nav-link" href="/user/signUp">Sign up</a>
+        <a class="nav-link" href="/user/login">Log in</a>
+        <% } else {%>  
+        <a class="nav-link" href="/user/logout">Log out</a>
+        <% } %> 
+        </div>
+    </div>
+  </div>
+</nav>

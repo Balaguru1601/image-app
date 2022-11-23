@@ -1,0 +1,86 @@
+<% layout('layout/boilerplate') %>
+    <div class="container">
+        <div class="row mx-auto w-100">
+            <div class="col-12 col-md-6 mb-4">
+                <div class="card">
+                    <div id="postCarousel" class="carousel slide card-img-top" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                        <% for( let index = 0; index < post.imgs.length; index++ ) { %>
+                            <div class="carousel-item <%= index === 0 ? "active" : "" %>">
+                                <img src="<%= post.imgs[index].url %>" class="d-block w-100" alt="...">
+                            </div>
+                        <% } %> 
+                        </div>
+                        <% if(post.imgs.length > 1) {%> 
+                        <button class="carousel-control-prev" type="button" data-bs-target="#postCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#postCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        <% } %> 
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2">Posted by: <a href="/user/<%= post.user_id._id %>" class="text-decoration-none text-muted"><%= post.user_id.username %></a></h6>
+                        <p class="card-text"><%= post.description %></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> <small>Posted on: <%= post.upTime.toLocaleDateString()%></small></li>
+                    </ul>
+                    <% if(currentUser._id.equals(post.user_id._id)) {%> 
+                    <div class="card-footer text-muted">
+                        <a class="btn btn-sm" href="/images/<%= post._id %>/edit"><i class="fas fa-pen"></i></a>
+                        <form class="d-inline" action="/images/<%= post._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-sm float-end"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                    <% } %> 
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <% if(!alreadyCommented && !post.user_id._id.equals(currentUser._id)){ %> 
+                <form action="/images/<%= post._id %>/comments/new" method="post" class="mb-5 needs-validation" novalidate>
+                    <div class="mt-4">
+                        <label for="commentBox" class="form-label fw-bold needs-validation"> Leave a Comment :</label>
+                        <textarea class="form-control" id="commentBox" rows="1" name="commentText" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-sm mt-1 me-2 float-end">Add comment</button>
+                </form>
+                <% } %> 
+                <div>
+                    <% if(post.comments && post.comments.length) {%> 
+                         <h3 class="h5 ms-1 mb-0">Comments</h3>
+                        <% for(let comment of post.comments) {%> 
+                        <div class="card-body">
+                            <div>
+                                <p id="originalComment<%= comment._id %>" class="card-text mb-1 d-inline-block"><%= comment.text %></p>
+                                <% if(currentUser._id.equals(comment.author._id)) {%> 
+                                    <button type="button" class="btn p-0 float-end" id="editBtn<%= comment._id %>" onclick="renderEditForm('<%= comment._id %>')"><i class="fas fa-edit"></i></button>
+                                    <form action="/images/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" class="d-inline" id="deleteForm<%= comment._id %>" method="post">
+                                        <button class="btn p-0 me-2 float-end"><i class="fas fa-trash"></i></button>
+                                    </form>
+                            </div>
+                            <form action="/images/<%= post._id %>/comments/<%= comment._id %>?_method=PUT" id="EditForm<%= comment._id %>" style="display: none;" class="needs-validation" method="post" novalidate>
+                                <div class="input-group">
+                                    <input type="text" name="commentText" value="<%= comment.text %>" class="form-control d-inline-block col-*" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <button class="btn col-*" type="submit"><i class="fas fa-arrow-circle-right fs-5"></i></button>
+                                </div>
+                            </form>
+                            <% } else { %> 
+                            </div>
+                            <% } %> 
+                            <a id="commentAuthor<%= comment._id %>" class="card-subtitle mb-1 text-muted text-decoration-none fw-bold" href="/user/<%= comment.author._id %>"><small><%=comment.author.username%></small></a>
+                        </div>
+                    <% } }%> 
+                </div>
+            </div>
+        </div>
+    </div>

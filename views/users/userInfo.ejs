@@ -1,0 +1,15 @@
+<% layout('layout/boilerplate') %>
+<div class="container">
+    <h1>Complete your Profile</h1>
+    <form action="/user/userinfo" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+        <div class="mb-3">
+            <label for="profile-pic" class="form-label">Profile pic: </label>
+            <input type="file" class="form-control" id="profile-pic" name="profile-pic">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="bio">Bio: </label>
+            <input type="text" class="form-control" id="bio" name="bio">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
