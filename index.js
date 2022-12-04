@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV != "production") {
-    require("dotenv").config();
+	require("dotenv").config();
 }
 
 const express = require("express");
@@ -14,31 +14,32 @@ const ExpressError = require("./utilities/ExpressError");
 const flash = require("connect-flash");
 const session = require("express-session");
 const imageRoute = require("./routes/imageRoutes");
-const commentRoute = require("./routes/commentsRoute"); 
+const commentRoute = require("./routes/commentsRoute");
 const userRoute = require("./routes/usersRoute");
+const db_url = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
 const app = express();
 
 mongoose
-    .connect("mongodb://localhost:27017/imageApp")
-    .then(() => {
-        console.log("MONGO CONNECTION OPEN!!!");
-    })
-    .catch((err) => {
-        console.log("OH NO MONGO ERROR!!!!");
-        console.log(err);
-    });
+	.connect(db_url)
+	.then(() => {
+		console.log("MONGO CONNECTION OPEN!!!");
+	})
+	.catch((err) => {
+		console.log("OH NO MONGO ERROR!!!!");
+		console.log(err);
+	});
 
 app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(
-    session({
-        secret: "MyfirstWebstagramApp",
-        resave: false,
-        saveUninitialized: true,
-    })
+	session({
+		secret: process.env.SESSIONSECRET,
+		resave: false,
+		saveUninitialized: true,
+	})
 );
 app.use(flash());
 app.use(methodOverride("_method"));
@@ -53,31 +54,31 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    res.locals.currentUrl = req.originalUrl;
-    res.locals.imageArray = [];
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
+	res.locals.currentUser = req.user;
+	res.locals.currentUrl = req.originalUrl;
+	res.locals.imageArray = [];
+	res.locals.success = req.flash("success");
+	res.locals.error = req.flash("error");
+	next();
 });
 
 app.use("/user", userRoute);
-app.use("/images", imageRoute)
-app.use("/images/:id/comments",commentRoute);
+app.use("/images", imageRoute);
+app.use("/images/:id/comments", commentRoute);
 
 app.get("/", (req, res) => {
-    res.render("home");
+	res.render("home");
 });
 
 app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page not found!"));
+	next(new ExpressError(404, "Page not found!"));
 });
 
 app.use((err, req, res, next) => {
-    const { status = 500, message = "Something went wrong" } = err;
-    res.status(status).render("error", { err });
+	const { status = 500, message = "Something went wrong" } = err;
+	res.status(status).render("error", { err });
 });
 
 app.listen(3000, () => {
-    console.log("Listening at 3000");
+	console.log("Listening at port");
 });
