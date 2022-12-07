@@ -43,7 +43,7 @@ app.use(
 );
 app.use(flash());
 app.use(methodOverride("_method"));
-app.use(express.static("public"));
+app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
