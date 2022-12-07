@@ -1,23 +1,27 @@
 <% layout('layout/boilerplate') %>
-<link rel="stylesheet" href="/stylesheets/imagePreview.css">
-<div class="container">
-    <h1 class="h2 mb-4 ms-2">Edit Post: </h1>
-    <form action="/images/<%= post._id %>?_method=PUT" method="post" class="mb-5 needs-validation" enctype="multipart/form-data" novalidate>
+    <link rel="stylesheet" href="../../public/stylesheets/imagePreview.css">
+    <div class="container">
+        <h1 class="h2 mb-4 ms-2">Edit Post: </h1>
+        <form action="/images/<%= post._id %>?_method=PUT" method="post" class="mb-5 needs-validation"
+            enctype="multipart/form-data" novalidate>
             <input type="file" class="form-control" id="imageFile" name="images" multiple onchange="previewMultiple()">
             <div class="row my-4 mx-3" id="img-preview-div">
-                <% for (let i=0;i<imageArray.length;i++) {%> 
+                <% for (let i=0;i<imageArray.length;i++) {%>
                     <div class="img-preview-div px-1" id="img-prev-div-orig<%= i %>">
-                    <img src="<%= imageArray[i].url %>" class="h-100 w-100 rounded" alt="">
-                    <button class="btn p-0 delete-icon"><i class="fas fa-times-circle" id="delete-icon<%= i %>" onclick="deleteImageArray('<%=i%>')"></i></button>
+                        <img src="<%= imageArray[i].url %>" class="h-100 w-100 rounded" alt="">
+                        <button class="btn p-0 delete-icon"><i class="fas fa-times-circle" id="delete-icon<%= i %>"
+                                onclick="deleteImageArray('<%=i%>')"></i></button>
                     </div>
-                    <input type="hidden" name="prevImages[]" value="<%= imageArray[i].filename %>#<%= imageArray[i].url %>">
-                <% } %> 
+                    <input type="hidden" name="prevImages[]"
+                        value="<%= imageArray[i].filename %>#<%= imageArray[i].url %>">
+                    <% } %>
             </div>
             <div class="valid-feedback">
                 Looks good!
             </div>
             <label for="description" class="form-label fw-bold">Description: </label>
-            <input type="text" name="description" value="<%= post.description %>" id="description" class="form-control" required>
+            <input type="text" name="description" value="<%= post.description %>" id="description" class="form-control"
+                required>
             <button class="btn btn-outline-secondary mt-3 ms-2 px-3" type="submit" onclick="clearArray()">Save</button>
-    </form>
-</div>
+        </form>
+    </div>

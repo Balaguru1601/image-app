@@ -67,7 +67,7 @@ app.use("/images", imageRoute);
 app.use("/images/:id/comments", commentRoute);
 
 app.get("/", (req, res) => {
-	res.render("home");
+	res.redirect("/images");
 });
 
 app.all("*", (req, res, next) => {
