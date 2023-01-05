@@ -56,6 +56,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.currentUrl = req.originalUrl;
+	console.log(req.originalUrl);
 	res.locals.imageArray = [];
 	res.locals.success = req.flash("success");
 	res.locals.error = req.flash("error");

@@ -22,7 +22,7 @@ router.get("/login", userController.renderLoginForm);
 router.post(
 	"/login",
 	passport.authenticate("local", {
-		failureRedirect: "/login",
+		failureRedirect: "/user/login",
 		failureFlash: true,
 	}),
 	userController.loginUser
