@@ -71,5 +71,4 @@ function removeFileFromFileList(index) {
 
 function setArray(arr) {
 	previmgArr = JSON.parse(arr);
-	console.log(previmgArr);
 }

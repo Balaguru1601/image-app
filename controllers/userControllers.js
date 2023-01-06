@@ -31,9 +31,7 @@ module.exports.renderLoginForm = (req, res) => {
 };
 
 module.exports.loginUser = (req, res) => {
-	console.log(req.session.returnTo);
 	const redirectUrl = req.session.returnTo || "/";
-	console.log("hii", redirectUrl);
 	delete req.session.returnTo;
 	res.redirect(redirectUrl);
 };

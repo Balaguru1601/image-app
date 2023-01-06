@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const User = require("./models/userModel");
 const passport = require("passport");
@@ -52,7 +54,6 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.currentUrl = req.originalUrl;
-	console.log(req.originalUrl);
 	res.locals.imageArray = [];
 	res.locals.success = req.flash("success");
 	res.locals.error = req.flash("error");
@@ -64,7 +65,7 @@ app.use("/images", imageRoute);
 app.use("/images/:id/comments", commentRoute);
 
 app.get("/", (req, res) => {
-	res.redirect("/");
+	return res.redirect("/images");
 });
 
 app.all("*", (req, res, next) => {
