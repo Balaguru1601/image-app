@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV != "production") {
-	require("dotenv").config();
-}
-
 const express = require("express");
 const User = require("./models/userModel");
 const passport = require("passport");
@@ -43,7 +39,7 @@ app.use(
 );
 app.use(flash());
 app.use(methodOverride("_method"));
-app.use(express.static("static"));
+app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
@@ -68,7 +64,7 @@ app.use("/images", imageRoute);
 app.use("/images/:id/comments", commentRoute);
 
 app.get("/", (req, res) => {
-	res.redirect("/images");
+	res.redirect("/");
 });
 
 app.all("*", (req, res, next) => {
